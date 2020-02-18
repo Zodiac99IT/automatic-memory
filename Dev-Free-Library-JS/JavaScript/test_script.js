@@ -22,4 +22,9 @@ $(document).ready(function(){
             e.style.cursor = 'pointer';
         }
     });
+
+    $('#dflCheckBox').dflCheckBox({
+        text: 'checkBoxTest',
+    });
+
 });

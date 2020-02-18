@@ -1,6 +1,7 @@
 
 (function ($) {
 
+    //Button
     $.fn.dflButton = function ({
         disabled = false,
         elementAttr = {},
@@ -22,9 +23,13 @@
         var Attributes = ["autofocus", "form", "formaction", "name", "type", "value", "id", "class"];
 
         //#region types check
+
+        //Disabled
         if (typeof disabled === "boolean") {
             button.disabled = disabled;
         }
+
+        //elementAttr
         if (typeof elementAttr === "object") {
             Attributes.forEach(element => {
                 if (elementAttr[element] !== undefined) {
@@ -35,6 +40,8 @@
                 }
             });
         }
+
+        //Height
         switch (typeof height) {
             case "function":
                 button.style.height = height() + 'px';
@@ -45,20 +52,32 @@
             case "string":
                 button.style.height = height;
         }
+
+        //Hint
         if (typeof hint === "string") {
             button.title = hint;
         }
+
+        //HoverStateEnabled
         if (typeof hoverStateEnabled === "boolean") {
             if (hoverStateEnabled) {
                 button.onmouseover = onClick;
             }
         }
+
+        //Icon
         if (typeof icon === "string") {
             button.style.background = icon;
         }
+
+        //onClick
         if (typeof onClick === "function") {
             button.onclick = onClick;
+        }else if(typeof onClick === "string"){
+            button.onclick = function(){ window[onClick](button) };
         }
+
+        //Styling
         if (typeof styling === "string") {
             switch (styling) {
                 case 'text':
@@ -73,9 +92,13 @@
                     break;
             }
         }
+
+        //Text
         if (typeof text === "string") {
             button.textContent = text;
         }
+
+        //UseSubmitBehavior
         if (typeof useSubmitBehavior === 'boolean') {
             if (useSubmitBehavior) {
                 button.type = 'submit';
@@ -83,6 +106,8 @@
                 button.type = 'button';
             }
         }
+
+        //Visible
         if (typeof visible === 'boolean') {
             if (visible) {
                 button.style.display = 'block';
@@ -90,6 +115,8 @@
                 button.style.display = 'none';
             }
         }
+
+        //Width
         switch (typeof width) {
             case "function":
                 button.style.width = width() + 'px';
@@ -100,6 +127,7 @@
             case "string":
                 button.style.width = width;
         }
+
         //#endregion
 
         button.classList.add('-dfl-button-style');
@@ -107,7 +135,7 @@
         return this;
     }
 
-
+    //DataGrid (Table)
     $.fn.dflDataGrid = function ({
         allowColumnSearch = false,
         data = [],
@@ -127,6 +155,8 @@
         var td = document.createElement('td');
 
         //#region types check
+
+        //Data
         if (Array.isArray(data)) {
             var lastkeys = [];
             data.forEach(element => {
@@ -148,6 +178,7 @@
             trth.classList.add("-dfl-tr-style");
             table.append(trth);
 
+            //allowColumnSearch
             if(typeof allowColumnSearch === 'boolean'){
                 if(allowColumnSearch){
                     var tableRows = table.rows;
@@ -190,6 +221,8 @@
                             if(cells[i].innerText === keys[j]){
                                 td.innerText = element[keys[j]];
                             }
+
+                            //onCellClick
                             if(typeof onCellClick === 'function'){
                                 td.onclick = onCellClick(td);
                             }else if(typeof onCellClick === 'string'){
@@ -197,6 +230,8 @@
                                     td.onclick = function(){ window[onCellClick](td); }
                                 }
                             }
+
+                            //onCellHover
                             if(typeof onCellHover === 'function'){
                                 td.onmouseover = onCellHover(td);
                             }else if(typeof onCellHover === 'string'){
@@ -204,6 +239,7 @@
                                     td.onmouseover = function(){ window[onCellHover](td); }
                                 }
                             }
+
                             td.classList.add("-dfl-td-style");
                             if(typeof cellHintEnabled === 'boolean'){
                                 if(cellHintEnabled){
@@ -218,9 +254,13 @@
                 }
             });
         }
+
+        //Hint
         if(typeof hint === 'string'){
             table.title = hint;
         }
+
+        //Height
         switch (typeof height) {
             case "function":
                 table.style.height = height() + 'px';
@@ -231,6 +271,8 @@
             case "string":
                 table.style.height = height;
         }
+
+        //Width
         switch (typeof width) {
             case "function":
                 table.style.width = width() + 'px';
@@ -241,10 +283,100 @@
             case "string":
                 table.style.width = width;
         }
+
         //#endregion
         
         table.classList.add("-dfl-table-style")
         $(this).append(table);
+    }
+
+    //CheckBox
+    $.fn.dflCheckBox = function ({
+        elementAttr = {},
+        name = 'DflCheckBox',
+        onOptionChanged = function(){},
+        text = 'CheckBox',
+        value = false,
+        visible = true,
+        height = '20px',
+        width = '20px'
+    }) {
+        //Main Object
+        var checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        //#region types check
+
+        //elementAttr
+        if(typeof elementAttr === 'object'){
+            var keys = Object.keys(elementAttr);
+            for(var i = 0; i < keys.length; i++){
+                checkbox[keys[i]] = elementAttr[keys[i]];
+            }
+        }
+
+        //name
+        if(typeof name === 'string'){
+            checkbox.name = name;
+        }
+
+        //onOptionChanged
+        if(typeof onOptionChanged === 'function'){
+            checkbox.onchange = onOptionChanged(checkbox);
+        }else if(typeof onOptionChanged === 'string'){
+            if(typeof window[onOptionChanged] === 'function'){
+                checkbox.onchange = function(){ window[onOptionChanged](checkbox); }
+            }
+        }
+
+        //value
+        if(typeof value === 'boolean'){
+            checkbox.checked = value;
+        }
+
+        //visible
+        if(typeof visible === 'boolean'){
+            if(visible){
+                checkbox.style.display = '';
+            }else{
+                checkbox.style.display = 'none';
+            }
+        }
+
+        //Height
+        switch (typeof height) {
+            case "function":
+                checkbox.style.height = height() + 'px';
+                break;
+            case "number":
+                checkbox.style.height = height + 'px';
+                break;
+            case "string":
+                checkbox.style.height = height;
+                break;
+        }
+
+        //Width
+        switch (typeof width) {
+            case "function":
+                checkbox.style.width = width() + 'px';
+                break;
+            case "number":
+                checkbox.style.width = width + 'px';
+                break;
+            case "string":
+                checkbox.style.width = width;
+                break;
+        }
+
+        //#endregion
+
+        $(this).append(checkbox);
+
+        //text check
+        if(typeof text === 'string'){
+            //Check after append of checkbox because it need to be the text of the checkbox
+            this.append('<label>' + text + '</label>');
+        }
     }
 
 })(jQuery);
