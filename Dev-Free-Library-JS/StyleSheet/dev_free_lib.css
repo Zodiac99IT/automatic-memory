@@ -1,0 +1,39 @@
+*{
+    box-sizing: border-box;
+}
+
+.-dfl-button-style{
+    background-color: lightblue;
+    border-radius: 10px;
+}
+
+.-dfl-button-border{
+    background-color: white;
+    border-color: lightblue;
+    border-width: 5px;
+}
+
+.-dfl-button-text{
+    background-color: white;
+    border-color: white;
+    border-width: 0px;
+    color: blue;
+}
+
+.-dfl-table-style{
+    float: left;
+    border-collapse: collapse;
+    border-bottom: solid grey 2px;
+}
+
+.-dfl-th-style {
+    border: solid grey 2px;
+    background-color: lightgrey;
+    text-align: center;
+}
+
+.-dfl-td-style, .-dfl-tr-style{
+    border-right: solid grey 2px;
+    border-left: solid grey 2px;
+    text-align: center;
+}
